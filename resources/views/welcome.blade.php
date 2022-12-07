@@ -1,3 +1,15 @@
+<style>
+  .error
+  {
+    color:red;
+  }
+  .none
+  {
+    display:none;
+  }
+
+</style>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -117,10 +129,12 @@
         <div class="row mt-5 ">
           <div class="col-12 col-sm-6 py-2 wow fadeInLeft">
             <input type="text" class="form-control" placeholder="Full name" name="pat_name" id="ptname"  required="">
+            <span id="msg1" class="error">*Invalid details of field!<span>
             <input type="hidden" class="form-control" placeholder="Token" value="" id="patient_token" name="pat_token"  >
           </div>
           <div class="col-12 col-sm-6 py-2 wow fadeInRight">
-            <input type="number" class="form-control" placeholder="Phone"  name="pat_phone"required="" >
+            <input type="number" class="form-control" placeholder="Phone" id="mb"  name="pat_phone"required="" >
+            <span id="msg2" class="error">*10 Digit require!<span>
           </div>
           <div class="col-12 col-sm-6 py-2 wow fadeInLeft" data-wow-delay="300ms" >
             <input type="date" class="form-control" name="reg_date" required="">
@@ -130,7 +144,8 @@
             </select>
           </div>
           <div class="col-12 py-2 wow fadeInUp" data-wow-delay="300ms">
-            <input type="number" class="form-control" placeholder="Register fees" name="pay_fees" required="">
+            <input type="number" class="form-control" placeholder="Register fees" name="pay_fees"  id="fees" required="">
+            <span id="msg3" class="error">*Invalid fees amount!<span>
           </div>
           <div class="col-12 py-2 wow fadeInUp" data-wow-delay="300ms">
             <textarea  id="message" class="form-control" rows="3" name="pat_description" placeholder="Enter description of patient problem" required="" ></textarea>
@@ -151,7 +166,57 @@
     let ran = Math.floor(1000+Math.random()*9000);
     token_tx.value=ran;
 
+    const ptn=document.getElementById('ptname');
+    const mb=document.getElementById('mb');
+    const fs=document.getElementById('fees');
+
+    const ms1=document.querySelector('#msg1');
+    const ms2=document.querySelector('#msg2');
+    const ms3=document.querySelector('#msg3');
+    ms1.classList.add('none');
+    ms2.classList.add('none');
+    ms3.classList.add('none');
     
+    const form = document.querySelector('form');
+    form.addEventListener('submit',(e)=>{
+      
+      if(!isNaN(ptn.value))
+        {
+          e.preventDefault();
+          ms1.classList.remove('none');
+        }
+        else
+        {
+          ms1.classList.add('none');
+          
+        }
+
+        
+
+        if(mb.value.toString().length<10 || mb.value.toString().length>10)
+        {
+          e.preventDefault();
+          ms2.classList.remove('none');
+        }
+        else
+        {
+          ms2.classList.add('none');
+          
+        }
+
+        if(fs.value==0 || fs.value<0)
+        {
+          e.preventDefault();
+          ms3.classList.remove('none');
+        }
+        else
+        {
+          ms3.classList.add('none');
+        }
+      
+
+    });
+  
     
 
    </script>
